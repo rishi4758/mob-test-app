@@ -30,20 +30,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
   List randorList = [];
+  var currentNumber;
 
-  getCountries() async {
-    var response =
-        await Dio().get('https://csrng.net/csrng/csrng.php?min=1&max=1000');
+  getList() async {
+    var response = await Dio().get('https://csrng.net/csrng/csrng.php?min=1&max=1000');
     randorList.add(response.data[0]['random']);
-    print(randorList);
-    return response.data[0]['random'];
+    setState(() {
+      currentNumber = response.data[0]['random'].toString();
+    });
   }
 
   Widget myItmes() {
@@ -57,13 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -76,15 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
-                  getCountries();
+                  getList();
                 }),
-            Text("Previous NUmbers"),
-             myItmes()
-        
+                 Text('$currentNumber '),
+            Text("Previous Numbers"),
+            myItmes()
           ],
         ),
       ),
-     
     );
   }
 }
