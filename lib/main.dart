@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getList() async {
     var response = await Dio().get('https://csrng.net/csrng/csrng.php?min=1&max=1000');
-    randorList.add(response.data[0]['random']);
+    randorList.add(response.data[0]['random'].toString());
     setState(() {
       currentNumber = response.data[0]['random'].toString();
     });
